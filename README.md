@@ -15,9 +15,9 @@ albums, artists. It should look similar to this:
 
 ```csv
 Title,Album,Artist
-"Whatever It Takes", "Best Of 2017 Pop", "Imagine Dragons"
-"Alone In A Room", "Asking Alexandria", "Asking Alexandria"
-"Into The Fire", "Asking Alexandria", "Asking Alexandria"
-"Sound Of The Drums", "The Best Of Armin Only", "Armin van Buuren"
-"Could Have Been Me", "Everybody Wants", "The Struts"
+"Whatever It Takes","Best Of 2017 Pop","Imagine Dragons"
+"Alone In A Room","Asking Alexandria","Asking Alexandria"
+"Into The Fire","Asking Alexandria","Asking Alexandria"
+"Sound Of The Drums","The Best Of Armin Only","Armin van Buuren"
+"Could Have Been Me","Everybody Wants","The Struts"
 ```

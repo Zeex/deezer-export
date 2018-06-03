@@ -67,7 +67,7 @@
                 '"' + song.title  + '"',
                 '"' + song.album  + '"', 
                 '"' + song.artist  + '"'
-            ].join(', ');
+            ].join(',');
             csvContent += csvEntry + '\n';
         }
         download('music.csv', csvContent);
