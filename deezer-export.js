@@ -12,16 +12,16 @@
     }, 100);
     
     extractSongs();
-    $('.datagrid').bind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
+    $('.catalog-content *[role=rowgroup]').bind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
     
-    function extractSongs(grid) {
-        $(grid).find('.song').each(function() {
-            var number = $(this).find('.datagrid-track-number').text();
+    function extractSongs(songList) {
+        $(songList).find('*[aria-rowindex]').each(function() {
+            var number = $(this).attr('aria-rowindex');
             if (!trackNumbers[number]) {
                 trackNumbers[number] = true;
-                var title = $(this).find('[itemprop=name]').text();
-                var artist = $(this).find('[itemprop=byArtist]').text();
-                var album = $(this).find('[itemprop=inAlbum]').text();
+                var title = $(this).find('[data-testid=title]').text();
+                var artist = $(this).find('[data-testid=artist]').text();
+                var album = $(this).find('[data-testid=album]').text();
                 songs.push({
                     number: number,
                     title: title,
@@ -67,9 +67,9 @@
                 '"' + song.title  + '"',
                 '"' + song.album  + '"', 
                 '"' + song.artist  + '"'
-            ].join(',');
+            ].join(', ');
             csvContent += csvEntry + '\n';
         }
-        download('music.csv', csvContent);
+        download('Playlist.csv', csvContent);
     }
 })();
