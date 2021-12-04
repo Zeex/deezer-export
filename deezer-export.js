@@ -19,15 +19,22 @@
             var number = $(this).attr('aria-rowindex');
             if (!trackNumbers[number]) {
                 trackNumbers[number] = true;
-                var title = $(this).find('[data-testid=title]').text();
-                var artist = $(this).find('[data-testid=artist]').text();
-                var album = $(this).find('[data-testid=album]').text();
-                songs.push({
+                var song = {
                     number: number,
-                    title: title,
-                    artist: artist,
-                    album: album
-                });
+                    title: 
+                        Array.prototype.join.call(
+                            $(this).find('[data-testid=title]').map(function() { return $(this).text(); }),
+                            ', '),
+                    artist:
+                        Array.prototype.join.call(
+                            $(this).find('[data-testid=artist]').map(function() { return $(this).text(); }),
+                            ', '),
+                    album:
+                        Array.prototype.join.call(
+                            $(this).find('[data-testid=album]').map(function() { return $(this).text(); }),
+                            ', ')
+                }
+                songs.push(song);
             };
         });
     }
