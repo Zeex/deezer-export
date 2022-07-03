@@ -12,7 +12,7 @@
     }, 100);
     
     extractSongs();
-    $('.catalog-content *[role=rowgroup]').bind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
+    var $table = $('.catalog-content *[role=rowgroup]').bind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
     
     function extractSongs(songList) {
         $(songList).find('*[aria-rowindex]').each(function() {
@@ -46,7 +46,7 @@
             // If after 1 second nothing changes we probably reached the end.
             console.log('Timed out');
             clearInterval(scrollTimer);
-            $('.datagrid').unbind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
+            $table.unbind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
             downloadCsv();
         }, 1000);
     }
