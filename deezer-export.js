@@ -11,7 +11,7 @@
         console.log('Scrolling...');
     }, 100);
     
-    extractSongs();
+    extractSongs($('.catalog-content'));
     var $table = $('.catalog-content *[role=rowgroup]').bind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
     
     function extractSongs(songList) {
@@ -43,14 +43,15 @@
         extractSongs(this);
         clearTimeout(timeoutTimer);
         timeoutTimer = setTimeout(function() {
-            // If after 1 second nothing changes we probably reached the end.
+            // If after 3 seconds nothing changes we probably reached the end.
             console.log('Timed out');
             clearInterval(scrollTimer);
             $table.unbind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
             downloadCsv();
-        }, 1000);
+        }, 3000);
     }
-    
+    onRowsChanged();
+
     // https://stackoverflow.com/a/18197341
     function download(filename, text) {
         var element = document.createElement('a');
