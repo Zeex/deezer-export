@@ -1,3 +1,4 @@
+
 (function() {
     var trackNumbers = {};
     var songs = [];
@@ -11,9 +12,28 @@
         console.log('Scrolling...');
     }, 100);
     
-    extractSongs();
-    var $table = $('.catalog-content *[role=rowgroup]').bind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
+
+    const catalog_playlist = 'catalog-content';
+    const catalog_fav = 'naboo-catalog-content';
+
+    var catalog_type = null;
+
+    if (document.getElementsByClassName(catalog_fav).length > 0) 
+    {
+        console.log('Favourites detected');
+        catalog_type = catalog_fav;
+    }
+    else
+    {
+        console.log('Playlist detected');
+        catalog_type = catalog_playlist; 
+    }
+
+
+    extractSongs('.'+catalog_type);
+    var $table = $('.'+catalog_type+' *[role=rowgroup]').bind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
     
+
     function extractSongs(songList) {
         $(songList).find('*[aria-rowindex]').each(function() {
             var number = $(this).attr('aria-rowindex');
@@ -43,14 +63,15 @@
         extractSongs(this);
         clearTimeout(timeoutTimer);
         timeoutTimer = setTimeout(function() {
-            // If after 1 second nothing changes we probably reached the end.
+            // If after 3 seconds nothing changes we probably reached the end.
             console.log('Timed out');
             clearInterval(scrollTimer);
             $table.unbind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
             downloadCsv();
-        }, 1000);
+        }, 3000);
     }
-    
+    onRowsChanged();
+
     // https://stackoverflow.com/a/18197341
     function download(filename, text) {
         var element = document.createElement('a');
