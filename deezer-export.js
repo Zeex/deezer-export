@@ -11,20 +11,10 @@
         console.log('Scrolling...');
     }, 100);
     
-    var CATALOG_CLASS_PLAYLIST = 'catalog-content';
-    var CATALOG_FAVORITES = 'naboo-catalog-content';
-    var catalogClass = null;
+    var $catalog = $('.naboo-catalog');
+    extractSongs($catalog);
 
-    if (document.getElementsByClassName(CATALOG_FAVORITES).length > 0) {
-        console.log('Favorites detected');
-        catalogClass = CATALOG_FAVORITES;
-    } else {
-        console.log('Playlist detected');
-        catalogClass = CATALOG_CLASS_PLAYLIST; 
-    }
-
-    extractSongs('.' + catalogClass);
-    var $table = $('.' + catalogClass + ' *[role=rowgroup]').bind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
+    var $table = $catalog.find('*[role=rowgroup]').bind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
 
     function extractSongs(songList) {
         $(songList).find('*[aria-rowindex]').each(function() {
@@ -80,7 +70,7 @@
         songs.sort(function(s1, s2) {
             return s1.number - s2.number;
         });
-        console.log('Got ' + songs.length + ' songs');
+        console.log('Extracted ' + songs.length + ' songs');
         for (var i = 0; i < songs.length; i++) {
             var song = songs[i];
             var csvEntry = [
@@ -90,6 +80,16 @@
             ].join(', ');
             csvContent += csvEntry + '\n';
         }
-        download('Playlist.csv', csvContent);
+        var $playlistTitle = $catalog.find('[data-testid="masthead-title"]');
+        var playlistTitle;
+        if ($playlistTitle.length > 0) {
+            playlistTitle = $playlistTitle.text();
+        } else if ($catalog.find('.loved-title').length > 0) {
+            playlistTitle = 'Favorites';
+        } else {
+            playlistTitle = 'Playlist';
+        }
+        var playlistFileName = playlistTitle.replaceAll(/[<>\/\\:"|?*]/g, '_') + '.csv';
+        download(playlistFileName, csvContent);
     }
 })();
