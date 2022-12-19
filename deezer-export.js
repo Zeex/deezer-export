@@ -1,4 +1,3 @@
-
 (function() {
     var trackNumbers = {};
     var songs = [];
@@ -12,27 +11,20 @@
         console.log('Scrolling...');
     }, 100);
     
+    var CATALOG_CLASS_PLAYLIST = 'catalog-content';
+    var CATALOG_FAVORITES = 'naboo-catalog-content';
+    var catalogClass = null;
 
-    const catalog_playlist = 'catalog-content';
-    const catalog_fav = 'naboo-catalog-content';
-
-    var catalog_type = null;
-
-    if (document.getElementsByClassName(catalog_fav).length > 0) 
-    {
-        console.log('Favourites detected');
-        catalog_type = catalog_fav;
-    }
-    else
-    {
+    if (document.getElementsByClassName(CATALOG_FAVORITES).length > 0) {
+        console.log('Favorites detected');
+        catalogClass = CATALOG_FAVORITES;
+    } else {
         console.log('Playlist detected');
-        catalog_type = catalog_playlist; 
+        catalogClass = CATALOG_CLASS_PLAYLIST; 
     }
 
-
-    extractSongs('.'+catalog_type);
-    var $table = $('.'+catalog_type+' *[role=rowgroup]').bind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
-    
+    extractSongs('.' + catalogClass);
+    var $table = $('.' + catalogClass + ' *[role=rowgroup]').bind('DOMNodeInserted DOMNodeRemoved', onRowsChanged);
 
     function extractSongs(songList) {
         $(songList).find('*[aria-rowindex]').each(function() {
