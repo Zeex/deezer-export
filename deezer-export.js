@@ -7,7 +7,7 @@
     $('html').scrollTop(0);
     var scrollTimer = setInterval(function() {
         $('html').scrollTop(top);
-        top += 50;
+        top += 400;
         console.log('Scrolling...');
     }, 100);
     
