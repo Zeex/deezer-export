@@ -77,7 +77,7 @@
                 '"' + song.title  + '"',
                 '"' + song.album  + '"', 
                 '"' + song.artist  + '"'
-            ].join(', ');
+            ].join(',');
             csvContent += csvEntry + '\n';
         }
         var $playlistTitle = $catalog.find('[data-testid="masthead-title"]');
